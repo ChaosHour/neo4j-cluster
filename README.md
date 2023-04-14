@@ -10,6 +10,10 @@ A 3 node neo4j-cluster created with Vagrant and Ansible. Ubuntu Jammy on the OS 
 * Clone this repo
 * Run `vagrant status` to see the status of the VMs
 * Run `vagrant up` to start the VMs
+* Run `ansible -i inventory all -m ping` to verify the VMs are up and running
+* Run `ansible-playbook -i inventory build.yml` to build the cluster
+* Login to the cluster from a browser at http://192.168.3.11:7474 
+
 
 
 ## Notes
