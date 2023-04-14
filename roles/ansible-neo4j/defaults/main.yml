@@ -1,0 +1,57 @@
+---
+
+# Select neo4j version
+# neo4j_package: neo4j # community version
+neo4j_package: neo4j-enterprise
+
+# Package version
+neo4j_package_version: stable
+
+# Service name
+neo4j_service_name: neo4j
+
+# Manage service
+neo4j_manage_service: true
+
+# limits.conf
+neo4j_update_limits: true
+neo4j_nofile_value: 40000
+
+# neo4j neostore mapped memory
+neo4j_mm_nodestore: 25M
+neo4j_mm_relationshipstore: 50M
+neo4j_mm_propertystore: 90M
+neo4j_mm_propertystore_strings: 130M
+neo4j_mm_propertystore_arrays: 130M
+neo4j_mm_index: 5M
+neo4j_nm_index_keys: 5M
+neo4j_cache_type: none
+
+# Cluster nodes
+node1: 192.168.3.11
+node2: 192.168.3.12
+node3: 192.168.3.13
+
+# Cluster ports
+discovery_port: 5000
+cluster_port: 6000
+raft_port: 7000
+routing_port: 7688
+
+# Cluster user
+cluster_user: neo4j
+
+# Cluster password
+cluster_password: neo4j
+
+# Cluster name
+cluster_name: neo4j
+
+# Cluster role
+cluster_role: core
+
+# Cluster initial discovery members
+cluster_initial_discovery_members:
+  - node1
+  - node2
+  - node3

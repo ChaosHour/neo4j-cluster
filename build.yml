@@ -1,0 +1,25 @@
+---
+- name: Build Play
+  hosts: all
+  remote_user: vagrant
+  become: true
+  become_user: root
+  become_method: sudo
+  gather_facts: true
+# cacheable: true
+#  vars_files:
+#      - vars/main.yml
+  tasks:
+
+
+  pre_tasks:
+      []
+
+
+  roles:
+      - { role: ansible-java17-oracle, tags: ['java17'] }
+      - { role: ansible-neo4j, tags: ['neo4j'] }
+
+
+  post_tasks:
+      []

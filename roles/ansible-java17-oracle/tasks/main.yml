@@ -1,0 +1,29 @@
+---
+- name: Install add-apt-repostory
+  ansible.builtin.apt: 
+    name: software-properties-common 
+    state: latest
+
+- name: Add Oracle Java Repository
+  ansible.builtin.apt_repository: 
+    repo: 'ppa:linuxuprising/java'
+
+- name: Update apt cache
+  ansible.builtin.apt: 
+    update_cache: yes    
+
+- name: Accept Java 17 License
+  ansible.builtin.debconf: 
+    name: "oracle-java17-installer" 
+    question: "shared/accepted-oracle-license-v1-3" 
+    value: "true"
+    vtype: "select"
+
+- name: Install Oracle Java 17 and packages | Ubuntu
+  ansible.builtin.apt: 
+    name: 
+      - oracle-java17-installer
+      - ca-certificates
+      - oracle-java17-set-default
+    state: latest
+  

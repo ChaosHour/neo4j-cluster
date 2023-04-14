@@ -1,0 +1,81 @@
+---
+
+- name: Install neo4j dependencies
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - python3-urllib3
+      - libpython3-stdlib 
+      - ca-certificates 
+      - curl 
+      - gnupg 
+      - lsb-release 
+    state: present
+
+- name: Add Neo4j apt key
+  ansible.builtin.apt_key: 
+    url: 
+      #http://debian.neo4j.org/neotechnology.gpg.key
+      https://debian.neo4j.com/neotechnology.gpg.key
+    keyring:
+      /usr/share/keyrings/neo4j.gpg
+    state: present
+
+- name: Set Neo4j repository
+  ansible.builtin.apt_repository: 
+    repo: "deb [signed-by=/usr/share/keyrings/neo4j.gpg] https://debian.neo4j.com stable 5" 
+    state: present 
+    update_cache: yes
+
+- name: Set Neo4j universe repository
+  ansible.builtin.apt_repository:
+    repo: "deb http://archive.ubuntu.com/ubuntu jammy multiverse universe"
+    state: present
+    update_cache: yes
+
+- name: Accept License neo4j-enterprise
+  ansible.builtin.debconf:
+    name: "{{ neo4j_package }}"
+    question: neo4j/accept-license
+    value: 'Accept commercial license'
+    vtype: select
+
+- name: Install neo4j package
+  ansible.builtin.apt: 
+    name: "{{ neo4j_package }}"
+    state: present 
+    update_cache: yes 
+    force: yes
+
+- name: Configure Neo4j
+  ansible.builtin.template:
+    src: neo4j-new.conf
+    dest: /etc/neo4j/neo4j.conf
+    owner: neo4j
+    group: adm 
+    mode: 0644
+  notify: restart neo4j
+  tags: [jconf]
+
+- name: Set open fd soft limit
+  ansible.builtin.pam_limits:
+    domain: neo4j
+    limit_type: soft
+    limit_item: nofile
+    value: "{{ neo4j_nofile_value }}"
+  when: neo4j_update_limits
+
+- name: Set open fd hard limit
+  ansible.builtin.pam_limits:
+    domain: neo4j
+    limit_type: hard
+    limit_item: nofile
+    value: "{{ neo4j_nofile_value }}"
+  when: neo4j_update_limits
+
+- name: Ensure Neo4j is enabled and started
+  ansible.builtin.systemd:
+    name: "{{ neo4j_service_name }}"
+    enabled: yes
+    state: started
+  when: neo4j_manage_service

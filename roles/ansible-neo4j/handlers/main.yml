@@ -1,0 +1,7 @@
+---
+
+- name: restart neo4j
+  ansible.builtin.systemd: 
+    name: "{{ neo4j_service_name }}" 
+    state: restarted
+  when: neo4j_manage_service

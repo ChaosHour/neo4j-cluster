@@ -1,0 +1,4 @@
+[neo4j_cluster]
+node1 ansible_host=192.168.3.11 ansible_user=vagrant ansible_ssh_private_key_file=/Users/klarsen/projects/neo4j-cluster/.vagrant/machines/node1/virtualbox/private_key
+node2 ansible_host=192.168.3.12 ansible_user=vagrant ansible_ssh_private_key_file=/Users/klarsen/projects/neo4j-cluster/.vagrant/machines/node2/virtualbox/private_key
+node3 ansible_host=192.168.3.13 ansible_user=vagrant ansible_ssh_private_key_file=/Users/klarsen/projects/neo4j-cluster/.vagrant/machines/node3/virtualbox/private_key

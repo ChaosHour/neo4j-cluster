@@ -1,0 +1,5 @@
+---
+- name: Install neo4j tasks
+  ansible.builtin.include_tasks: 
+    file: install_neo4j.yml
+  tags: [neo4j]
