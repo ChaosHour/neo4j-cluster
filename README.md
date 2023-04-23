@@ -12,7 +12,7 @@ A 3 node neo4j-cluster created with Vagrant and Ansible. Ubuntu Jammy on the OS 
 * Add the following to the secrets.yml file. Do not check in this file to git.
 ```yaml
 user: "Your User Name"
-password: "Your Password"
+pass: "Your Password"
 ```
 * Run `vagrant status` to see the status of the VMs
 * Run `vagrant up` to start the VMs
