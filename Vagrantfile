@@ -7,8 +7,7 @@ BOX_NAME = "Ubuntu LTS"
 BOX_CPU_COUNT = "2"
 BOX_RAM_MB = "4096"
 
-NEW_USER_NAME = "klarsen"
-NEW_USER_PASSWORD = "ou812"
+
  
 Vagrant.configure("2") do |config|
   # config.auto_build = true
@@ -61,19 +60,22 @@ Vagrant.configure("2") do |config|
    
    sleep 10
 
+   if File.exist?("secrets.yml")
+    require 'yaml'
+    uPass = YAML::load(File.open('secrets.yml'))
   #Additional provisioning with shell script to create customized user
-  config.vm.provision "shell", inline: <<-SHELL2
+  config.vm.provision "shell", inline:  <<-SHELL2
     sudo su - root
-    useradd -m -s /bin/bash -U #{NEW_USER_NAME}
-    usermod -aG sudo #{NEW_USER_NAME}
-    echo '#{NEW_USER_NAME}:#{NEW_USER_PASSWORD}' | chpasswd
-    cp -pr /home/vagrant/.ssh /home/#{NEW_USER_NAME}/
-    chown -R #{NEW_USER_NAME}:#{NEW_USER_NAME} /home/#{NEW_USER_NAME}
-    echo '3' | update-alternatives --config editor
+    useradd -m -s /bin/bash -U #{uPass['user']}
+    usermod -aG sudo #{uPass['user']}
+    echo '#{uPass['user']}:#{uPass['pass']}' | chpasswd
+    cp -pr /home/vagrant/.ssh /home/#{uPass['user']}/
+    chown -R #{uPass['user']}:#{uPass['user']} /home/#{uPass['user']}
+    echo '3' | update-alternatives --config editor    
     wait
     shutdown -r now
     SHELL2
-
+  
     sleep 10
 
 #    config.vm.provision "ansible" do |ansible|
@@ -85,4 +87,5 @@ Vagrant.configure("2") do |config|
 #      ansible.become = true
 #      #ansible.raw_arguments  = "--vault-password-file=vars/vault_pass.txt"
 #    end
+  end
 end
