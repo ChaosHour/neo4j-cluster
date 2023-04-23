@@ -8,7 +8,7 @@ A 3 node neo4j-cluster created with Vagrant and Ansible. Ubuntu Jammy on the OS 
 
 ## Usage
 * Clone this repo
-* Run `touch secrest.yml` to create the secrets file for Vagrant inline variables
+* Run `touch secrets.yml` to create the secrets file for Vagrant inline variables
 * Add the following to the secrets.yml file. Do not check in this file to git.
 ```yaml
 user: "Your User Name"
