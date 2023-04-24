@@ -196,4 +196,4 @@ klarsen@Mac-Book-Pro2 neo4j-cluster % vagrant destroy -f
 
 ### Neo4j-Cluster dashboard
 
-<img src="screenshots/Screenshot%202023-04-14%20at%201.09.43%20PM.png width="653" height="420" />
+<img src="screenshots/pic1.png width="653" height="420" />
